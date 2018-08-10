@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+      {% for jsfile_name in script_list %}
+    <script src="{{ host }}/{{ jsfile_name }}.js"></script>
+    {% endfor %}
+</head>
+<body>
+ <div id="{{ grid_id }}" style="margin:0 auto; width:{{ my_width }}px; height:{{ my_height }}px;"></div>
+
+<script type="text/javascript">
+<!-- 图表插入 -->
+     window.onload = function() {
+        setTimeout(function() {
+            var gridChart_{{ grid_id }} = echarts.init(document.getElementById('{{ grid_id }}'), null, {renderer: '{{ grid_renderer}}'});
+            {{ grid_custom_function }}
+            var grid_option_{{ grid_id }} = {{ grid_options | safe }};
+            gridChart_{{ grid_id }}.setOption(grid_option_{{ grid_id }});
+            window.onresize = function() {
+                gridChart_{{ grid_id }}.resize();
+            };
+        }, 1000);
+     };
+
+</script>
+</body>
+</html>

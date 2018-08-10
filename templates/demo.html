@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>demo</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='./css/normalize.css') }}">
+	<link href="{{ url_for('bootstrap_static', filename='bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='./css/style.css') }}" rel="stylesheet"> {% for jsfile_name in script_list %}
+	<script src="{{ host }}/{{ jsfile_name }}.js"></script>
+	{% endfor %}
+</head>
+
+<body>
+	<div class="row">
+		<div class="side col-md-2">
+			<div class="chartlist">
+				<ul class="nav nav-pills nav-stacked j-chartlist-wrap ">
+					<li role="presentation" data-type="pie">
+						<a href="#">饼状图</a>
+					</li>
+					<li role="presentation" data-type="line">
+						<a href="#">折线图</a>
+					</li>
+					<li role="presentation" data-type="bar">
+						<a href="#">柱状图</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="col-md-10  col-md-offset-2">
+			<div class="setting">
+				<form class="form" method="post" enctype="multipart/form-data">
+					<div class="col-sm-12">
+						<div class="col-sm-8">
+							<div class="contain-wrap" data-chart-type={{ chart_type }}>
+								<div class="contain" style={% if chart_type=='pie' %} "display:block;"{% else %} "display:none;"{% endif %}>
+									{{ pie_chart|safe }}
+								</div>
+								<div class="contain" style={% if chart_type=='line' %} "display:block;"{% else %} "display:none;"{% endif %}>
+									{{ line_chart|safe }}
+								</div>
+								<div class="contain" style={% if chart_type=='bar' %} "display:block;"{% else %} "display:none;"{% endif %}>
+									{{ bar_chart|safe }}
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group col-sm-4 " style="margin-bottom: 0 !important;">
+							<label for="chart-name">图表名称</label>
+							<input type="chartname" class="form-control" id="chart-name" data-name="">
+
+							<label for="chart-formula">编辑公式</label>
+							<input type="chartname" class="form-control" id="chart-formula" data-name="" placeholder="{{ current_chart.formula }}">
+
+							<div class="">
+								<label class="control-label">计算值</label>
+								<input type="text" class="form-control j-data-res">
+							</div>
+
+							<div class="">
+								<blockquote>
+									<p>想要计算 c=a+b</p>
+									<footer>编辑公式： a+b</footer>
+									<footer>计算值： c</footer>
+								</blockquote>
+							</div>
+							<div class="">
+								<label class="control-label">数据列表</label>
+								<table class="table table-bordered info-table">
+									<thead>
+										<tr>
+											<th>种类</th>
+											<th>数量</th>
+											<th>参数</th>
+											<th>展示</th>
+										</tr>
+									</thead>
+									<!-- (maruihua)TODO:  切换图标后表单信息一起切换 -->
+									<tbody>
+										{% for data in info %}
+										<tr class="j-data-wrap">
+											<td data-name={{ data.info_name }}>
+												{{ data.info_name }}
+											</td>
+											<td class="j-data-{{ data.info_name }} data ">{{ data.info_value }}</td>
+											<td>
+												[
+												<span class="j-data-sign"></span>
+												]
+											</td>
+											<td>
+												<input class="j-data-show" type="checkbox" {% if data in current_chart_paras %} checked{% endif %} data-id="{{ data.id }}">
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+
+							<div class="">
+								<div class="well well-lg">
+									<p class="j-calc-res">这里显示结果</p>
+								</div>
+								<div class="col-sm-6 j-calc-btn btn btn-info">确认（计算数据）</div>
+								<div class="col-sm-6 make-chart btn btn-success">生成图表</div>
+							</div>
+							<div class="opt">
+								<label for="exampleInputFile">导入文件包</label>
+								<input type="file" id="exampleInputFile" name="file">
+							</div>
+							<button type="submit" class="btn btn-primary">提交</button>
+							<!--{{ current_chart_paras }}-->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="{{ url_for('bootstrap_js', filename='jquery-3.3.1.min.js') }}"></script>
+	<script src="{{ url_for('bootstrap_js', filename='bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('index_js', filename='index.js') }}"></script>
+</body>
+
+</html>
