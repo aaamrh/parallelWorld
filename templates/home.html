@@ -63,8 +63,8 @@
 			</div>
 		</div>
 		<div class="chart-lt">
-			<div class="g-chart">
-
+			<div class="chart">
+				{{ line_chart|safe }}
 			</div>
 		</div>
 	</div>
@@ -354,7 +354,7 @@
 			timer = setInterval(ctrlTrack, 1000);
 		}
 
-		function stopBubble() {
+		function stopBubble(ev) {
 			// 阻止事件冒泡
 			var oEvent = ev || event;
 			if (window.event) {

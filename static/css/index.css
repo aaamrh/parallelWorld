@@ -43,24 +43,26 @@ body{
 	border-radius: 10px;
 	overflow: hidden;
 	height: 190px;
-	width: 250px;
-	background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
+	width: 280px;
+	/* background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
 	background: -webkit-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
+	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%); */
+	background: rgba(0,0,0,.3);
 }
 
 .tp .chart{
 	margin: 0 auto;
-	width: 220px;
-	height: 160px;
+	width: 260px;
+	height: 200px;
 }
 .btm{
 	border-radius: 10px;
 	margin-top: 20px;
 	overflow: hidden;
-	background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
+	/* background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
 	background: -webkit-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
+	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%); */
+	background: rgba(0,0,0,.3);
 }
 .btm .chart{
 	height: 240px;

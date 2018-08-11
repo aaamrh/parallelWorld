@@ -21,10 +21,14 @@ app.config['DEBUG'] = True
 
 @app.route('/')
 def home():
-    _pie = pie_chart(w=260, h=240, is_show=False, is_toolbox_show=False)
+    _pie = pie_chart(w=260, h=240, is_show=False,
+                     is_toolbox_show=False, is_legend_show=False)
     pie_javascript_snippet = TRANSLATOR.translate(_pie.options)
-    _bar = bar_chart(w=220, h=220, is_show=False, is_toolbox_show=False)
-    pie_javascript_snippet = TRANSLATOR.translate(_pie.options)
+    _bar = bar_chart(w=260, h=220, is_show=False,
+                     is_toolbox_show=False, is_legend_show=False)
+    _radar = radar_chart()
+    
+    radar_javascript_snippet = TRANSLATOR.translate(_radar.options)
 
     return render_template(
         'home.html',
@@ -32,7 +36,8 @@ def home():
         script_list=_pie.get_js_dependencies(),
         # 渲染图表
         pie_chart=_pie.render_embed(),
-        bar_chart=_bar.render_embed()
+        bar_chart=_bar.render_embed(),
+        radar_chart=_radar.render_embed()
     )
 
 
@@ -40,8 +45,6 @@ def home():
 def index():
     _pie = pie_chart()
     pie_javascript_snippet = TRANSLATOR.translate(_pie.options)
-    _line = line_chart()
-    line_javascript_snippet = TRANSLATOR.translate(_line.options)
     _randar = radar_chart()
     randar_javascript_snippet = TRANSLATOR.translate(_randar.options)
     _bar = bar_chart()
@@ -50,7 +53,7 @@ def index():
     # 从数据库读取数据信息渲染到chart
     is_show_chart = Charts.query.filter_by(is_show=True).first()
     chart_type = is_show_chart.name  # 图表类型：pie, line 等等
-    current_chart = Charts.query.filter_by(name=chart_type).first()  #默认展示的图表
+    current_chart = Charts.query.filter_by(name=chart_type).first()  # 默认展示的图表
     current_chart_paras = current_chart.inf.all()
 
     # 获取所有的信息
@@ -124,14 +127,13 @@ def index():
         "demo.html",
         host=REMOTE_HOST,
         script_list=_pie.get_js_dependencies(),
-        
+
         info=info,
         chart_type=chart_type,
         current_chart=current_chart,
         current_chart_paras=current_chart_paras,
         # 渲染图表
         pie_chart=_pie.render_embed(),
-        line_chart=_line.render_embed(),
         radar_chart=_randar.render_embed(),
         bar_chart=_bar.render_embed()
     )
@@ -169,12 +171,12 @@ def set_chart():
 
 @app.route('/chart_data/', methods=['GET'])
 def chart_data():
-    if request.method  == 'GET':
+    if request.method == 'GET':
         selectChartType = request.args.get('selectChart')  # 图表类型：pie, line 等等
         currentChartType = request.args.get('currentChart')
         current_chart = Charts.query.filter_by(name=currentChartType).first()
         select_chart = Charts.query.filter_by(name=selectChartType).first()
-        current_chart.is_show=False
+        current_chart.is_show = False
         select_chart.is_show = True
         db.session.commit()
     return ''
@@ -184,11 +186,12 @@ def chart_data():
 ## #####################################
 
 
-def pie_chart(w=600, h=400, is_show=True, is_toolbox_show=True):
+def pie_chart(w=600, h=400, is_show=True, is_toolbox_show=True, is_legend_show=True):
     chart = Charts.query.filter_by(name='pie').first()
     current_chart_paras = chart.inf.all()
 
-    pie = Pie(chart.tit, "", title_pos='center', width=w, height=h, title_color='#fff', title_text_size=12)
+    pie = Pie(chart.tit, "", title_pos='center', width=w,
+              height=h, title_color='#fff', title_text_size=12)
 
     attr = []
     v = []
@@ -207,39 +210,28 @@ def pie_chart(w=600, h=400, is_show=True, is_toolbox_show=True):
     label_color = ['#bbd3b1', "#8db978", '#669f40', '#548534']
 
     # v = [num_red, num_blue]
-    pie.add('', attr, v, legend_pos='right', legend_orient='vertical',
-            legend_text_color='#fff', label_color=label_color, is_label_show=is_show, is_toolbox_show=is_toolbox_show)
+    pie.add('', attr, v, legend_pos='right', legend_orient='vertical', rosetype='radius', radius=[40, 70],
+            legend_text_color='#fff', label_color=label_color, is_label_show=is_show, is_toolbox_show=is_toolbox_show, is_legend_show=is_legend_show)
     return pie
 
 
-def line_chart():
-    line = Line("伤亡趋势图", "伤亡人口", title_pos='center')
-    attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-    v1 = [5, 20, 36, 10, 10, 100]
-    v2 = [55, 60, 16, 20, 15, 80]
-    line = Line("折线图示例")
-    visual_range_color = ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8',
-                          '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-    line.add("牺牲", attr, v1, mark_point=[
-             "average"], visual_range_color=visual_range_color, is_visualmap=True, visual_range=[0, 30])
-    line.add("负伤", attr, v2, is_smooth=True, mark_line=[
-             "max", "average"], legend_pos='right', legend_orient="vertical")
-    return line
 
-
-def bar_chart(w=600, h=400, is_show=True, is_toolbox_show=True):
+def bar_chart(w=600, h=400, is_show=True, is_toolbox_show=True, is_legend_show=True):
     chart = Charts.query.filter_by(name='bar').first()
     current_chart_paras = chart.inf.all()
     o = []
     attr = ['军队规模']
     v = []
 
-    bar = Bar("标记线和标记点示例",title_pos='center', width=w, height=h, title_color='#fff', title_text_size=12)
+    bar = Bar("标记线和标记点示例", title_pos='center', width=w,
+              height=h, title_color='#fff', title_text_size=12)
     # bar.add(legend_pos='right', legend_orient='vertical', label_text_color='#fff')
     label_color = ['#bbd3b1', "#8db978", '#669f40', '#548534']
 
     for i in current_chart_paras:
-        bar.add(i.info_name, attr, [i.info_value], is_label_show=is_show, is_toolbox_show=is_toolbox_show,legend_pos= "80%", legend_orient='vertical',bar_category_gap=0)
+        bar.add(i.info_name, attr, [i.info_value],  is_convert=True,  is_toolbox_show=is_toolbox_show, yaxis_rotate=90,legend_pos='right',
+                is_label_show=is_show, xaxis_label_textcolor="#fff", yaxis_label_textcolor="#fff",
+                is_legend_show=is_legend_show, legend_orient='vertical', xaxis_pos="bottom")
 
     # bar.add("a", attr, [v[0]])
     # bar.add("商家B", attr, [v[1]])
@@ -249,17 +241,16 @@ def bar_chart(w=600, h=400, is_show=True, is_toolbox_show=True):
 
 
 def radar_chart():
-    schema = [
+    schema = [ 
         ("销售", 6500), ("管理", 16000), ("信息技术", 30000),
         ("客服", 38000), ("研发", 52000), ("市场", 25000)
     ]
     v1 = [[4300, 10000, 28000, 35000, 50000, 19000]]
     v2 = [[5000, 14000, 28000, 31000, 42000, 21000]]
     radar = Radar()
-    radar.config(schema)
-    radar.add("预算分配", v1, is_splitline=True, is_axisline_show=True)
-    radar.add("实际开销", v2, label_color=["#4e79a7"], is_area_show=False,
-              legend_selectedmode='single')
+    radar.config(schema, shape='circle',is_area_show=True,area_opacity=0.1,area_color="#fff",radar_text_size=26,rader_text_color="#fff")
+    radar.add("预算分配", v1, is_splitline=True, is_axisline_show=True, symbol=None, item_color="#b3e4a1",line_width=2)
+    radar.add("实际开销", v2, label_color=["#4e79a7"], symbol=None, line_width=2)
     return radar
 
 ## #####################################

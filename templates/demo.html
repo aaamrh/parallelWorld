@@ -23,7 +23,7 @@
 						<a href="#">饼状图</a>
 					</li>
 					<li role="presentation" data-type="line">
-						<a href="#">折线图</a>
+						<a href="#">雷达图</a>
 					</li>
 					<li role="presentation" data-type="bar">
 						<a href="#">柱状图</a>
@@ -41,8 +41,8 @@
 								<div class="contain" style={% if chart_type=='pie' %} "display:block;"{% else %} "display:none;"{% endif %}>
 									{{ pie_chart|safe }}
 								</div>
-								<div class="contain" style={% if chart_type=='line' %} "display:block;"{% else %} "display:none;"{% endif %}>
-									{{ line_chart|safe }}
+								<div class="contain" style={% if chart_type=='radar' %} "display:block;"{% else %} "display:none;"{% endif %}>
+									{{ radar_chart|safe }}
 								</div>
 								<div class="contain" style={% if chart_type=='bar' %} "display:block;"{% else %} "display:none;"{% endif %}>
 									{{ bar_chart|safe }}
