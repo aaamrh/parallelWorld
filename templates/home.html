@@ -360,7 +360,7 @@
 
 		function stopBubble() {
 			// 阻止事件冒泡
-			// var oEvent = ev || event;
+			var oEvent = ev || event;
 			if (window.event) {
 				oEvent.cancelBubble = true;
 			} else {
