@@ -134,17 +134,13 @@
 		function initModel(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec) {
 			var mtlLoader = new THREE.MTLLoader();
 
-			mtlLoader.setPath('{{ url_for('
-				static ', filename='
-				threelib / models / ')}}');
+			mtlLoader.setPath('{{ url_for('static', filename='threelib/models/')}}');
 			//加载mtl文件
 			mtlLoader.load(model_file + '.mtl', function (material) {
 				var objLoader = new THREE.OBJLoader();
 				//设置当前加载的纹理
 				objLoader.setMaterials(material);
-				objLoader.setPath('{{ url_for('
-					static ', filename='
-					threelib / models / ')}}');
+				objLoader.setPath('{{ url_for('static', filename='threelib/models/')}}');
 				objLoader.load(model_file + '.obj', function (object) {
 					models = object;
 					object.position.x = posx;
