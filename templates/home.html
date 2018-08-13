@@ -188,7 +188,6 @@
 			}
 			TWEEN.removeAll();
 
-		
 			//定义路径节点坐标
 			sept1 = {
 				posx: 1000,
@@ -221,9 +220,7 @@
 
 			tweenHead.chain(tween1);
 			tween1.chain(tweenBack);
-
 			tweenBack.chain(tweenHead);
-
 			tweenHead.start();
 		}
 
@@ -426,7 +423,7 @@
 		 * func: init()
 		 * @ desc: 3D界面初始化
 		 * @ Author: 汤睿 [ time: 2018-08-10 ]
-		 * @ Revision: name [ time: XX-XX-XX ]  [ desc ]
+		 * @ Revision: 马瑞华 [ time: 2018-08-13]  [ 增加了用tween.js驱动模型的函数 setupTween() ]
 		 * 
 		 * @ return:   none
 		 */
@@ -449,9 +446,7 @@
 					scalea = models_json.models[i].scalea,
 					scaleb = models_json.models[i].scaleb,
 					scalec = models_json.models[i].scalec;
-				console.log(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec);
 				initModel(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec);
-				console.log(models_arr);
 			}
 
 			//initfbxmodels();
