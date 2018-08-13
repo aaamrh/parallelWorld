@@ -19,14 +19,14 @@
 		<div class="side col-md-2">
 			<div class="chartlist">
 				<ul class="nav nav-pills nav-stacked j-chartlist-wrap ">
-					<li role="presentation" data-type="pie">
-						<a href="#">饼状图</a>
+					<li role="presentation" data-type="pie" >
+						<a href="#" style="{% if chart_type == 'pie' %}background:#fff; color:#398439;{% else %}background:transparent{% endif %}">饼状图</a>
 					</li>
-					<li role="presentation" data-type="line">
-						<a href="#">雷达图</a>
+					<li role="presentation" data-type="radar">  
+						<a href="#" style="{% if chart_type == 'radar' %}background:#fff; color:#398439;{% else %}background:transparent{% endif %}" >雷达图</a>
 					</li>
-					<li role="presentation" data-type="bar">
-						<a href="#">柱状图</a>
+					<li role="presentation" data-type="bar"  >
+						<a href="#" style="{% if chart_type == 'bar' %}background:#fff; color:#398439;{% else %}background:transparent{% endif %}">柱状图</a>
 					</li>
 				</ul>
 			</div>
@@ -114,7 +114,6 @@
 								<input type="file" id="exampleInputFile" name="file">
 							</div>
 							<button type="submit" class="btn btn-primary">提交</button>
-							<!--{{ current_chart_paras }}-->
 						</div>
 					</div>
 				</form>

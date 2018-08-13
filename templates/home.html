@@ -91,6 +91,7 @@
 		var scene, renderer, render, light, camera, meshHelper;
 		var models_arr = []; //定义储存全局模型变量对象
 		var models;
+		var tk1;
 		//创建性能监视器
 		function initstats() {
 			stats = new Stats();
@@ -129,32 +130,32 @@
 			scene.add(skyBox); //在场景中加入天空盒
 		}
 
-
-		//定义模型函数
+		// TODO: 初始化模型函数
 		function initModel(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec) {
 			var mtlLoader = new THREE.MTLLoader();
 
 			mtlLoader.setPath('{{ url_for('static', filename='threelib/models/')}}');
 			//加载mtl文件
-			mtlLoader.load(model_file + '.mtl', function (material) {
-				var objLoader = new THREE.OBJLoader();
-				//设置当前加载的纹理
-				objLoader.setMaterials(material);
-				objLoader.setPath('{{ url_for('static', filename='threelib/models/')}}');
-				objLoader.load(model_file + '.obj', function (object) {
-					models = object;
-					object.position.x = posx;
-					console.log(posx);
-					console.log(object.position.x)
-					object.position.y = posy;
-
-					object.position.z = posz;
-					object.scale.set(scalea, scaleb, scalec);
-					scene.add(object);
-				})
+			mtlLoader.load(model_file+'.mtl', function (material) {
+					var objLoader = new THREE.OBJLoader();
+					//设置当前加载的纹理
+					objLoader.setMaterials(material);
+					objLoader.setPath('{{ url_for('static', filename='threelib/models/')}}');
+					objLoader.load(model_file+'.obj', function (object) {
+							models = object;
+							object.position.x = posx;
+							console.log(posx);
+							console.log(object.position.x)
+							object.position.y = posy;
+							object.position.z = posz;
+							object.scale.set(scalea, scaleb, scalec);
+							scene.add(object);
+							models_arr.push(object);
+							setupTween();
+					});
 			});
 			return models;
-		}
+	}
 
 		function initLight() {
 			//新建光源
@@ -169,6 +170,63 @@
 			var ax = new THREE.AxesHelper(100000);
 			scene.add(ax);
 		}
+
+		// TODO: 控制模型运动
+		function setupTween() {
+			tk1 = models_arr[0];
+			easing = TWEEN.Easing.Elastic.InOut;
+			//定义初始坐标
+			current = {
+				posx: 0,
+				posy: 0,
+				posz: 0
+			};
+			var update = function () {
+				tk1.position.x = current.posx;
+				tk1.position.y = current.posy;
+				tk1.position.z = current.posz;
+			}
+			TWEEN.removeAll();
+
+		
+			//定义路径节点坐标
+			sept1 = {
+				posx: 1000,
+				posy: 0,
+				posz: 0
+			};
+			sept2 = {
+				posx: 1000,
+				posy: 0,
+				posz: 1000
+			};
+			var tweenHead = new TWEEN.Tween(current)
+				.to(sept1, 5000)
+				.delay(100)
+				.easing(easing)
+				.onUpdate(update);
+			var tween1 = new TWEEN.Tween(current)
+				.to(sept2, 5000)
+				.easing(easing)
+				.onUpdate(update);
+
+			var tweenBack = new TWEEN.Tween(current)
+				.to({
+					posx: 0,
+					posy: 0,
+					posz: 0
+				}, 5000)
+				.easing(easing)
+				.onUpdate(update);
+
+			tweenHead.chain(tween1);
+			tween1.chain(tweenBack);
+
+			tweenBack.chain(tweenHead);
+
+			tweenHead.start();
+		}
+
 
 		function initCamera() {
 			camera = new THREE.PerspectiveCamera(40, 800 / 600, 1, 6000);
@@ -237,10 +295,10 @@
 		}
 		//定义json数据
 		var models_json_test = '{"models" : [' +
-			'{"model_file" : "k4" , "model_obj" : "tk7" , "posx" : "0" , "posy" : "0" , "posz" : "500" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-			'{"model_file" : "k4" , "model_obj" : "tk8" , "posx" : "0" , "posy" : "0" , "posz" : "-500" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-			'{"model_file" : "k4" , "model_obj" : "tk9" , "posx" : "500" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-			'{"model_file" : "k4" , "model_obj" : "tk10" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "10" , "scaleb" : "10" , "scalec" : "10"}]}'
+			'{"model_file" : "k4" , "model_obj" : "tk1" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
+			'{"model_file" : "k4" , "model_obj" : "tk8" , "posx" : "0" , "posy" : "0" , "posz" : "-100" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
+			'{"model_file" : "k4" , "model_obj" : "tk9" , "posx" : "100" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
+			'{"model_file" : "tk2" , "model_obj" : "tk10" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"}]}'
 		var models_json = JSON.parse(models_json_test);
 
 		/**
@@ -274,16 +332,16 @@
 		})
 
 		/**
-		* func: ctrlTrack
-		* @ desc:  通过进度条的轨迹占总进度条的百分比，计算对应的时间戳
-		* @ Author:   马瑞华 [ time: 2018-08-10 ]
-		* @ Revision: name [ time: XX-XX-XX ] [ desc ]
-		* 
-		* @ param:    { type }  { desc }
-		* @ return:   { type }  { desc }
-		*/
+		 * func: ctrlTrack
+		 * @ desc:  通过进度条的轨迹占总进度条的百分比，计算对应的时间戳
+		 * @ Author:   马瑞华 [ time: 2018-08-10 ]
+		 * @ Revision: name [ time: XX-XX-XX ] [ desc ]
+		 * 
+		 * @ param:    { type }  { desc }
+		 * @ return:   { type }  { desc }
+		 */
 		function ctrlTrack() {
-			// TODO: 实时刷新鼠标点击事件后的模型坐标
+			// DONE: 实时刷新鼠标点击事件后的模型坐标
 			pastTime = Math.floor((sysTime - rgMin) / 1000);
 			currentWidth = pastTime / rgTime * 100;
 			sysTime += 1000;
@@ -372,6 +430,8 @@
 		 * 
 		 * @ return:   none
 		 */
+
+		// TODO:
 		function init() {
 			initScene();
 			initCamera();
@@ -389,13 +449,14 @@
 					scalea = models_json.models[i].scalea,
 					scaleb = models_json.models[i].scaleb,
 					scalec = models_json.models[i].scalec;
-				console.log(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec)
-				console.log(posx)
-				models_arr[i] = initModel(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec);
+				console.log(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec);
+				initModel(model_file, model_obj, posx, posy, posz, scalea, scaleb, scalec);
+				console.log(models_arr);
 			}
+
 			//initfbxmodels();
-			control();
 			// setupTween();
+			control();
 			render();
 		}
 

@@ -248,7 +248,7 @@ def radar_chart():
     v1 = [[4300, 10000, 28000, 35000, 50000, 19000]]
     v2 = [[5000, 14000, 28000, 31000, 42000, 21000]]
     radar = Radar()
-    radar.config(schema, shape='circle',is_area_show=True,area_opacity=0.1,area_color="#fff",radar_text_size=26,rader_text_color="#fff")
+    radar.config(schema, shape='circle',is_area_show=True,area_opacity=0.1,area_color="#fff",radar_text_color="#fff")
     radar.add("预算分配", v1, is_splitline=True, is_axisline_show=True, symbol=None, item_color="#b3e4a1",line_width=2)
     radar.add("实际开销", v2, label_color=["#4e79a7"], symbol=None, line_width=2)
     return radar
