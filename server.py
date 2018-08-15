@@ -257,79 +257,6 @@ def radar_chart():
 # END 图表区
 ## #####################################
 
-
-@app.route("/calc/", methods=["POST", "GET"])
-def calc():
-    res = request.form.get('t')
-
-    with open('map.json', 'r') as f:
-        data = json.load(f)
-    if res and type(res) == 'string':
-        res = int(res)
-    if not res:
-        pass
-    data["blue"] = res
-    with open("map.json", 'w') as dump_f:
-        json.dump(data, dump_f)
-
-    return render_template(
-        'calc.html',
-        res=res
-    )
-
-#  这里是用来测试多个图表显示的页面  后期删掉
-
-
-@app.route("/test/")
-def test():
-    attr = ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-    v1 = [5, 20, 36, 10, 75, 90]
-    v2 = [10, 25, 8, 60, 20, 80]
-    bar = Bar("柱状图示例", height=720)
-    bar.add("商家A", attr, v1, is_stack=True)
-    bar.add("商家B", attr, v2, is_stack=True)
-    line = Line("折线图示例", title_top="50%")
-    attr = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
-    line.add(
-        "最高气温",
-        attr,
-        [11, 11, 15, 13, 12, 13, 10],
-        mark_point=["max", "min"],
-        mark_line=["average"],
-    )
-    line.add(
-        "最低气温",
-        attr,
-        [1, -2, 2, 5, 3, 2, 0],
-        mark_point=["max", "min"],
-        mark_line=["average"],
-        legend_top="50%",
-    )
-
-    grid = Grid()
-    grid.add(bar, grid_bottom="60%")
-    grid.add(line, grid_top="60%")
-
-    grid_javascript_snippet = TRANSLATOR.translate(grid.options)
-    return render_template(
-        'test.html',
-        host=REMOTE_HOST,
-        # 饼状图
-        grid_id=grid.chart_id,
-        grid_renderer=grid.renderer,
-        my_width=600,
-        my_height=400,
-        grid_custom_function=grid_javascript_snippet.function_snippet,
-        grid_options=grid_javascript_snippet.option_snippet,
-        script_list=grid.get_js_dependencies(),
-    )
-
-
-# def calculate():
-#     res = request.form.get('t')
-#     return res
-
-
 @app.route('/uploads/<filename>')
 def upload_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
@@ -337,11 +264,6 @@ def upload_file(filename):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
-
-
-@app.route('/threelib/<filename>')
-def three_lib(filename):
-    return send_from_directory('threelib/', filename)
 
 
 @app.route('/js/<filename>')

@@ -1,5 +1,6 @@
     // 图表切换 
     var doc = document;
+    
     var chartNav = doc.getElementsByClassName('j-chartlist-wrap')[0];
     var charts = doc.getElementsByClassName('contain');
     var chartsNum = chartNav.children.length;
