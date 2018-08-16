@@ -98,7 +98,6 @@
   var scene, renderer, render, light, camera, meshHelper;
   var models_arr = []; //定义储存全局模型变量对象
   var models;
-  var tk1;
   //创建性能监视器
   function initstats() {
     stats = new Stats();
@@ -153,13 +152,13 @@
         objLoader.load(model_file+'.obj', function (object) {
             models = object;
             object.position.x = posx;
-            console.log(posx);
-            console.log(object.position.x)
             object.position.y = posy;
             object.position.z = posz;
             object.scale.set(scalea, scaleb, scalec);
             scene.add(object);
-            models_arr.push(object);
+            console.log(object);
+            models_arr[model_obj] = object;
+            console.log(models_arr);
             setupTween();
         });
     });
@@ -182,9 +181,9 @@
 
   // TODO: 控制模型运动
   function setupTween() {
-    tk1 = models_arr[0];
-    easing = TWEEN.Easing.Elastic.InOut;
-    ground = models_arr[2];
+    tk2 = models_arr['tk2'];
+    k41 = models_arr['k41'];
+    ground = models_arr['ground'];
 		ground.rotation.x = -0.5*Math.PI;
 		ground.scale.x = 10;
 		ground.scale.y = 10;
@@ -196,9 +195,14 @@
       posz: 0
     };
     var update = function () {
-      tk1.position.x = current.posx;
-      tk1.position.y = current.posy;
-      tk1.position.z = current.posz;
+      tk2.position.x = current.posx;
+      tk2.position.y = current.posy;
+      tk2.position.z = current.posz;
+    }
+    var update1 = function () {
+      k41.position.x = current.posx;
+      k41.position.y = current.posy;
+      k41.position.z = current.posz;
     }
     TWEEN.removeAll();
 
@@ -211,16 +215,34 @@
     sept2 = {
       posx: 1000,
       posy: 0,
-      posz: 1000
+      posz: 200
+    };
+    sept3 = {
+      posx: 800,
+      posy: 0,
+      posz: 500
+    };
+    sept4 = {
+      posx: 100,
+      posy: 0,
+      posz: 800
     };
     var tweenHead = new TWEEN.Tween(current)
-      .to(sept1, 5000)
+      .to(sept1, 2000)
       .delay(100)
-      .easing(easing)
+      .easing(TWEEN.Easing.Linear.None)
       .onUpdate(update);
     var tween1 = new TWEEN.Tween(current)
-      .to(sept2, 5000)
-      .easing(easing)
+      .to(sept2, 2000)
+      .easing(TWEEN.Easing.Linear.None)
+      .onUpdate(update1);
+    var tween2 = new TWEEN.Tween(current)
+      .to(sept3, 2000)
+      .easing(TWEEN.Easing.Linear.None)
+      .onUpdate(update1);
+    var tween3 = new TWEEN.Tween(current)
+      .to(sept4, 2000)
+      .easing(TWEEN.Easing.Linear.None)
       .onUpdate(update);
 
     var tweenBack = new TWEEN.Tween(current)
@@ -229,15 +251,20 @@
         posy: 0,
         posz: 0
       }, 5000)
-      .easing(easing)
+      .easing(TWEEN.Easing.Linear.None)
       .onUpdate(update);
 
-    tweenHead.chain(tween1);
-    tween1.chain(tweenBack);
+    tweenHead.chain(tween3);
+    tween3.chain(tweenBack);
     tweenBack.chain(tweenHead);
-    tweenHead.start();
-  }
 
+    tween1.chain(tween2);
+    tween2.chain(tweenBack);
+    tweenBack.chain(tween1);
+
+    tweenHead.start();
+    tween1.start();
+  }
 
   function initCamera() {
     camera = new THREE.PerspectiveCamera(40, 800 / 600, 1, 6000);
@@ -304,12 +331,13 @@
     renderer.render(scene, camera);
 
   }
+  // TODO:  K42模型没有加载上
   //定义json数据
   var models_json_test = '{"models" : [' +
-    '{"model_file" : "k4" , "model_obj" : "tk1" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-    '{"model_file" : "terrain" , "model_obj" : "tk8" , "posx" : "0" , "posy" : "0" , "posz" : "-100" , "scalea" : "1" , "scaleb" : "1" , "scalec" : "1"},' +
-    '{"model_file" : "k4" , "model_obj" : "tk9" , "posx" : "100" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-    '{"model_file" : "tk2" , "model_obj" : "tk10" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"}]}'
+    '{"model_file" : "k4" , "model_obj" : "k41" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
+    '{"model_file" : "terrain" , "model_obj" : "ground" , "posx" : "0" , "posy" : "0" , "posz" : "-100" , "scalea" : "1" , "scaleb" : "1" , "scalec" : "1"},' +
+    '{"model_file" : "k4" , "model_obj" : "k42" , "posx" : "100" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
+    '{"model_file" : "tk2" , "model_obj" : "tk2" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"}]}'
   var models_json = JSON.parse(models_json_test);
 
   /**
@@ -318,7 +346,6 @@
    * @ Revision: name  [ desc ]
    * 
    * @ ascSort:    { func }  { 用sort()对数组进行升序排序 }
-   * @ return:   { type }  { desc }
    */
 
   // 数组升序排序
@@ -343,8 +370,21 @@
   })
 
   /**
+   * [ 进度条--功能实现 ]
+   * @ Author: 马瑞华 [ time: 2018-08-10 ]
+   * @ Revision: 马瑞华 [ time: 2018-08-10 ]  [ desc ]
+   * @ Version: 1.0
+   * 
+   * @ func:  { ctrlTrack }  { 拖动进度条后对时间戳等的计算 }
+   * @ func:  { mosDown }  { 鼠标点击事件 }
+   * @ func:  { mosMove }  { 鼠标移动事件 }
+   * @ func:  { mosUp }  { 鼠标抬起，清空点击和移动的事件 }
+   * @ func:  { stopBubble }  { 阻止事件冒泡 }
+   */
+ 
+  /**
    * func: ctrlTrack
-   * @ desc:  通过进度条的轨迹占总进度条的百分比，计算对应的时间戳
+   * @ desc:  滑动进度条，通过进度条的轨迹占总进度条的百分比，计算对应的时间戳
    * @ Author:   马瑞华 [ time: 2018-08-10 ]
    * @ Revision: name [ time: XX-XX-XX ] [ desc ]
    * 
@@ -375,19 +415,7 @@
     rgTrack.style.right = 100 - currentWidth + '%';
   }
 
-  /**
-   * [ 进度条--功能实现 ]
-   * @ Author: 马瑞华 [ time: 2018-08-10 ]
-   * @ Revision: 马瑞华 [ time: 2018-08-10 ]  [ desc ]
-   * @ Version: 1.0
-   * 
-   * @ func:  { mosDown }  { 鼠标点击事件 }
-   * @ func:  { mosMove }  { 鼠标移动事件 }
-   * @ func:  { mosUp }  { 鼠标抬起，清空点击和移动的事件 }
-   * @ func:  { stopBubble }  { 阻止事件冒泡 }
-   */
   range.addEventListener('mousedown', mosDown);
-
   function mosDown(ev) {
     var ev = ev || window.event;
     disX = ev.clientX - range.offsetLeft;
@@ -433,6 +461,7 @@
     }
   }
 
+  // TODO: 便于查找
   /**
    * func: init()
    * @ desc: 3D界面初始化
@@ -441,13 +470,11 @@
    * 
    * @ return:   none
    */
-
-  // TODO:
   function init() {
     initScene();
     initCamera();
     initLight();
-    initSkybox();
+    // initSkybox();
     initstats();
     initTools();
     //循环加载模型

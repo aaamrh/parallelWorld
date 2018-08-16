@@ -16,7 +16,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${workspaceRoot}/venv/Scripts/python.exe",
+            "pythonPath": "E:/xamp/htdocs/project/flaskProj/venv/Scripts/python.exe",
             "program": "${workspaceRoot}/server.py",
             "cwd": "${workspaceRoot}",
             "env": {

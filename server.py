@@ -21,13 +21,10 @@ app.config['DEBUG'] = True
 
 @app.route('/')
 def home():
-    _pie = pie_chart(w=260, h=240, is_show=False,
-                     is_toolbox_show=False, is_legend_show=False)
+    _pie = pie_chart(w=260, h=240, is_show=False, is_toolbox_show=False, is_legend_show=False)
     pie_javascript_snippet = TRANSLATOR.translate(_pie.options)
-    _bar = bar_chart(w=260, h=220, is_show=False,
-                     is_toolbox_show=False, is_legend_show=False)
+    _bar = bar_chart(w=260, h=220, is_show=False, is_toolbox_show=False, is_legend_show=False)
     _radar = radar_chart()
-    
     radar_javascript_snippet = TRANSLATOR.translate(_radar.options)
 
     return render_template(
@@ -219,13 +216,10 @@ def pie_chart(w=600, h=400, is_show=True, is_toolbox_show=True, is_legend_show=T
 def bar_chart(w=600, h=400, is_show=True, is_toolbox_show=True, is_legend_show=True):
     chart = Charts.query.filter_by(name='bar').first()
     current_chart_paras = chart.inf.all()
-    o = []
-    attr = ['军队规模']
-    v = []
+    attr = ['规模']
 
     bar = Bar("标记线和标记点示例", title_pos='center', width=w,
               height=h, title_color='#fff', title_text_size=12)
-    # bar.add(legend_pos='right', legend_orient='vertical', label_text_color='#fff')
     label_color = ['#bbd3b1', "#8db978", '#669f40', '#548534']
 
     for i in current_chart_paras:
@@ -233,10 +227,6 @@ def bar_chart(w=600, h=400, is_show=True, is_toolbox_show=True, is_legend_show=T
                 is_label_show=is_show, xaxis_label_textcolor="#fff", yaxis_label_textcolor="#fff",
                 is_legend_show=is_legend_show, legend_orient='vertical', xaxis_pos="bottom")
 
-    # bar.add("a", attr, [v[0]])
-    # bar.add("商家B", attr, [v[1]])
-    # bar.add("商家c", attr, [v[2]])
-    # bar.add("商家d", attr, [v[3]])
     return bar
 
 

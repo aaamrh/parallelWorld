@@ -7,7 +7,7 @@ from flask_script import Manager
 from sqlalchemy import create_engine
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:root@192.168.1.111:3306/demo1"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://war:ruisfree.com@yrwxss.ruisfree.com:3306/war"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:root@192.168.0.102:3306/demo1"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 # engine = create_engine("mysql+pymysql://root:root@192.168.1.103:3308/demo1", pool_pre_ping=True)
