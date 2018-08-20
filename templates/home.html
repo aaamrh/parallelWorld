@@ -80,19 +80,63 @@
   -----------------------------------
 */
 
-	// 控制条
-	var rgMax = 0;  // JSON中的最大时间戳
-  var rgMin = 0;  // JSON中的最小时间戳 
-  var rgTime = 0; // 从json中获取时间戳，计算时间轴的长度  > 多少秒
-  var range = document.querySelector('.range-slider');
-  var rgTrack = document.querySelector('.range-bar-active'); // 走过的轨迹
-  var disX = 0; // 鼠标距离进度条最左端的距离
-  var times = []; // 获取json中所有的时间戳
-  var jsonData; // 获取的JSON信息
-  var sysTime = 0;  // 系统时间
-  var signal = false; // 是否重置当前的时间
-  var currentWidth = 0; // 鼠标点击滚动条后的进度条的宽度
-  var pastTime = 0;  // 已经走过的时间
+  // 控制条
+  ;(function(){
+    var
+  rgMax = 0,  // JSON中的最大时间戳
+  rgMin = 0,  // JSON中的最小时间戳 
+  rgTime = 0, // 从json中获取时间戳，计算时间轴的长度  > 多少秒
+  range = document.querySelector('.range-slider'),
+  rgTrack = document.querySelector('.range-bar-active'), // 走过的轨迹
+  disX = 0, // 鼠标距离进度条最左端的距离
+  times = [], // 获取json中所有的时间戳
+  jsonData, // 获取的JSON信息
+  sysTime = 0,  // 系统时间
+  signal = false, // 是否重置当前的时间
+  currentWidth = 0, // 鼠标点击滚动条后的进度条的宽度
+  pastTime = 0;  // 已经走过的时间
+
+  var 
+  CALC_SPEED = true;
+  allPosx = [], // 存错每个时间点所有的模型的坐标， 用在 render() 函数中实时驱动模型
+  allPosy = [], 
+  allPosz = [],
+  moveSpeedX = [],
+  moveSpeedY = [],
+  moveSpeedZ = [],
+  ctrlModels = [];  //  可以操作的模型，不包括 地形，等这些模型
+
+  
+  /**
+   * [ 从.json文件中获取模型的坐标信息 ]
+   * @ Author: 马瑞华 [ time: 2018-08-10 ]
+   * @ Revision: name  [ desc ]
+   * 
+   * @ ascSort:    { func }  { 用sort()对数组进行升序排序 }
+   */
+  // 数组升序排序
+  function ascSort(a, b) {
+    return a - b;
+  }
+
+  //  获取数据，将str转化为 JS对象
+  $.get("../static/threelib/models/position.json", function (data, status) {
+    jsonData = JSON.parse(data);
+    console.log(jsonData);
+    for (var i in jsonData) {
+      times.push(i);
+    }
+    times.sort(ascSort);      // > [时间戳，时间戳，时间戳]
+    rgMax = times[times.length - 1];
+    rgMin = times[0];
+    sysTime = times[0] * 1;
+    rgTime = Math.floor((rgMax - rgMin) / 1000);
+    
+    beforPos = jsonData[rgMin];
+
+    //  每1秒，控制条增加
+    timer = setInterval(ctrlTrack, 1000);
+  })
 
   ///////////////////////////////////////////////////////////////////////
   var scene, renderer, render, light, camera, meshHelper;
@@ -156,114 +200,45 @@
             object.position.z = posz;
             object.scale.set(scalea, scaleb, scalec);
             scene.add(object);
-            console.log(object);
-            models_arr[model_obj] = object;
-            console.log(models_arr);
+            models_arr[model_obj] = object;    
+
             setupTween();
+            render();
         });
     });
     return models;
 }
 
+  //新建光源
   function initLight() {
-    //新建光源
     light = new THREE.PointLight(0xffffff);
     light.position.set(300, 400, 200);
     scene.add(light);
     scene.add(new THREE.AmbientLight(0xffffff));
   }
 
+  //定义地板
+  function initFloor() {
+  //添加地板割线
+  var grid = new THREE.GridHelper( 2000, 20, 0xffffff, 0xffffff );
+  grid.material.opacity = 0.2;
+  grid.material.transparent = true;
+  grid.position.y = 100;
+  scene.add( grid );
+}
   function initTools() {
     //新建坐标系
     var ax = new THREE.AxesHelper(100000);
     scene.add(ax);
   }
 
-  // TODO: 控制模型运动
+
   function setupTween() {
-    tk2 = models_arr['tk2'];
-    k41 = models_arr['k41'];
     ground = models_arr['ground'];
 		ground.rotation.x = -0.5*Math.PI;
 		ground.scale.x = 10;
 		ground.scale.y = 10;
 		ground.scale.z = 10;
-    //定义初始坐标
-    current = {
-      posx: 0,
-      posy: 0,
-      posz: 0
-    };
-    var update = function () {
-      tk2.position.x = current.posx;
-      tk2.position.y = current.posy;
-      tk2.position.z = current.posz;
-    }
-    var update1 = function () {
-      k41.position.x = current.posx;
-      k41.position.y = current.posy;
-      k41.position.z = current.posz;
-    }
-    TWEEN.removeAll();
-
-    //定义路径节点坐标
-    sept1 = {
-      posx: 1000,
-      posy: 0,
-      posz: 0
-    };
-    sept2 = {
-      posx: 1000,
-      posy: 0,
-      posz: 200
-    };
-    sept3 = {
-      posx: 800,
-      posy: 0,
-      posz: 500
-    };
-    sept4 = {
-      posx: 100,
-      posy: 0,
-      posz: 800
-    };
-    var tweenHead = new TWEEN.Tween(current)
-      .to(sept1, 2000)
-      .delay(100)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(update);
-    var tween1 = new TWEEN.Tween(current)
-      .to(sept2, 2000)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(update1);
-    var tween2 = new TWEEN.Tween(current)
-      .to(sept3, 2000)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(update1);
-    var tween3 = new TWEEN.Tween(current)
-      .to(sept4, 2000)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(update);
-
-    var tweenBack = new TWEEN.Tween(current)
-      .to({
-        posx: 0,
-        posy: 0,
-        posz: 0
-      }, 5000)
-      .easing(TWEEN.Easing.Linear.None)
-      .onUpdate(update);
-
-    tweenHead.chain(tween3);
-    tween3.chain(tweenBack);
-    tweenBack.chain(tweenHead);
-
-    tween1.chain(tween2);
-    tween2.chain(tweenBack);
-    tweenBack.chain(tween1);
-
-    tweenHead.start();
-    tween1.start();
   }
 
   function initCamera() {
@@ -298,10 +273,48 @@
     gui.add(controls, 'tankpostationz', -5, 5);
   }
   //  渲染3D界面
+  function move(o, axis, speed){
+    o = parseInt(o);
+    if(o > axis){
+      o -= speed;
+    }
+    if(o < axis){
+      o += speed;
+    }
+    return o;
+  }
+
   function render() {
     requestAnimationFrame(render);
-    TWEEN.update();
+    // TWEEN.update();
     stats.update();
+   
+    if (jsonData[sysTime]) {
+      for(var i in jsonData[sysTime]){
+        ctrlModels[i] = i;
+        allPosx[i] = jsonData[sysTime][i].x;
+        allPosy[i] = jsonData[sysTime][i].y;
+        allPosz[i] = jsonData[sysTime][i].z;
+        if(CALC_SPEED){
+          moveSpeedX[i] = Math.abs(models_arr[i].position.x - allPosx[i])*0.02;
+          moveSpeedY[i] = Math.abs(models_arr[i].position.y - allPosy[i])*0.02;
+          moveSpeedZ[i] = Math.abs(models_arr[i].position.z - allPosz[i])*0.02;
+        }
+      }
+      CALC_SPEED = false;
+    }
+    if(ctrlModels){
+      for(var i in ctrlModels){
+        models_arr[i].position.z = move(models_arr[i].position.z, allPosz[i], moveSpeedZ[i]);
+        models_arr[i].position.x = move(models_arr[i].position.x, allPosx[i], moveSpeedX[i]);
+        models_arr[i].position.y = move(models_arr[i].position.y, allPosy[i], moveSpeedY[i]);
+        console.log(models_arr[i].position.x);
+        console.log(models_arr[i].position.y);
+        console.log(models_arr[i].position.z);
+      }
+
+    }
+
 
     /*if (jsonData[sysTime]) { //如果这个时间点有数据，就更新小车位置参数
       tank_axisx = jsonData[sysTime].x;
@@ -327,11 +340,8 @@
     if (tank1.position.z < tank_axisz) {
       tank1.position.z += 10;
     }*/
-
     renderer.render(scene, camera);
-
   }
-  // TODO:  K42模型没有加载上
   //定义json数据
   var models_json_test = '{"models" : [' +
     '{"model_file" : "k4" , "model_obj" : "k41" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
@@ -339,35 +349,6 @@
     '{"model_file" : "k4" , "model_obj" : "k42" , "posx" : "100" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
     '{"model_file" : "tk2" , "model_obj" : "tk2" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"}]}'
   var models_json = JSON.parse(models_json_test);
-
-  /**
-   * [ 从.json文件中获取模型的坐标信息 ]
-   * @ Author: 马瑞华 [ time: 2018-08-10 ]
-   * @ Revision: name  [ desc ]
-   * 
-   * @ ascSort:    { func }  { 用sort()对数组进行升序排序 }
-   */
-
-  // 数组升序排序
-  function ascSort(a, b) {
-    return a - b;
-  }
-
-  //  获取数据，将str转化为 JS对象
-  $.get("../static/threelib/models/position.json", function (data, status) {
-    jsonData = JSON.parse(data);
-    for (var i in jsonData) {
-      times.push(i);
-    }
-    times.sort(ascSort);
-    rgMax = times[times.length - 1];
-    rgMin = times[0];
-    sysTime = times[0] * 1;
-    rgTime = Math.floor((rgMax - rgMin) / 1000);
-
-    //  每1秒，控制条增加
-    timer = setInterval(ctrlTrack, 1000);
-  })
 
   /**
    * [ 进度条--功能实现 ]
@@ -391,11 +372,19 @@
    * @ param:    { type }  { desc }
    * @ return:   { type }  { desc }
    */
+
+  // TODO: 
+  var model_move_arr = [];
   function ctrlTrack() {
     // DONE: 实时刷新鼠标点击事件后的模型坐标
     pastTime = Math.floor((sysTime - rgMin) / 1000);
     currentWidth = pastTime / rgTime * 100;
     sysTime += 1000;
+
+    if(jsonData[sysTime]){
+      CALC_SPEED = true;
+    }
+
     if (sysTime - 1000 === parseInt(rgMax)) {
       rgTrack.style.right = 0 + '%';
       sysTime = parseInt(rgMax);
@@ -413,6 +402,9 @@
       signal = false;
     }
     rgTrack.style.right = 100 - currentWidth + '%';
+    
+    var model_move_arr = [];
+   
   }
 
   range.addEventListener('mousedown', mosDown);
@@ -461,7 +453,6 @@
     }
   }
 
-  // TODO: 便于查找
   /**
    * func: init()
    * @ desc: 3D界面初始化
@@ -474,6 +465,7 @@
     initScene();
     initCamera();
     initLight();
+    initFloor();
     // initSkybox();
     initstats();
     initTools();
@@ -492,11 +484,14 @@
 
     //initfbxmodels();
     // setupTween();
+    
     control();
-    render();
+    // render();
   }
 
   init();
+  })();
+  
 	</script>
 </body>
 
