@@ -1,0 +1,464 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# 创建的文件:22.08.2018 17:09:15
+
+newmtl WaterStation
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\WaterStation_LP_AlbedoTransparency.jpg
+	map_Kd buildings2\WaterStation_LP_AlbedoTransparency.jpg
+
+newmtl CarTexture_Var1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\CarA_Var1_AlbedoTransparency.jpg
+	map_Kd buildings2\CarA_Var1_AlbedoTransparency.jpg
+
+newmtl MidTree
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\Mid_TreeTilet_AlbedoTransparency.jpg
+	map_Kd buildings2\Mid_TreeTilet_AlbedoTransparency.jpg
+
+newmtl Bars
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\Bars_AlbedoTransparency.jpg
+	map_Kd buildings2\Bars_AlbedoTransparency.jpg
+
+newmtl garage
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\LP_DefaultMaterial_AlbedoTransparency.jpg
+	map_Kd buildings2\LP_DefaultMaterial_AlbedoTransparency.jpg
+
+newmtl parkchair_parkchair__AO_tga
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\parkchair1_D.jpg
+	map_Kd buildings2\parkchair1_D.jpg
+
+newmtl Block_Building_Diffuse_Specular
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\Block_Building_Diffuse_Specular.jpg
+	map_Kd buildings2\Block_Building_Diffuse_Specular.jpg
+
+newmtl StreetLight
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\StreetLight_AlbedoTransparency.jpg
+	map_Kd buildings2\StreetLight_AlbedoTransparency.jpg
+
+newmtl window_4
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\windowGroup_4_Albedo.jpg
+	map_Kd buildings2\windowGroup_4_Albedo.jpg
+
+newmtl window_1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\windowGroup_1_Albedo.jpg
+	map_Kd buildings2\windowGroup_1_Albedo.jpg
+
+newmtl window_3
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\windowGroup_3_Albedo.jpg
+	map_Kd buildings2\windowGroup_3_Albedo.jpg
+
+newmtl window_2
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\windowGroup_2_Albedo.jpg
+	map_Kd buildings2\windowGroup_2_Albedo.jpg
+
+newmtl t002_door001
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t002_door001_Albedo.jpg
+	map_Kd buildings2\t002_door001_Albedo.jpg
+
+newmtl t_002_b001_1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t_002_b001-1_style2_basecolor.jpg
+	map_Kd buildings2\t_002_b001-1_style2_basecolor.jpg
+
+newmtl t_002_b002_1
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t_002_b002-1_style2_basecolor.jpg
+	map_Kd buildings2\t_002_b002-1_style2_basecolor.jpg
+
+newmtl t_002_br001
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\b002_br002_style2_basecolor.jpg
+	map_Kd buildings2\b002_br002_style2_basecolor.jpg
+
+newmtl br_opt_001
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\br_001_style2_basecolor.jpg
+	map_Kd buildings2\br_001_style2_basecolor.jpg
+
+newmtl chimney
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\chimney_Albedo.jpg
+	map_Kd buildings2\chimney_Albedo.jpg
+
+newmtl ad_001
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\ad_Group_1_Albedo.jpg
+	map_Kd buildings2\ad_Group_1_Albedo.jpg
+
+newmtl br_opt_003
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\br_003_basecolor.jpg
+	map_Kd buildings2\br_003_basecolor.jpg
+
+newmtl br_opt_002
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\br_002_style2_basecolor.jpg
+	map_Kd buildings2\br_002_style2_basecolor.jpg
+
+newmtl parkchair_D2_parkchair__AO_tga
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\parkchair1_D.jpg
+	map_Kd buildings2\parkchair1_D.jpg
+
+newmtl CarTexture
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\CarA_AlbedoTransparency.jpg
+	map_Kd buildings2\CarA_AlbedoTransparency.jpg
+
+newmtl NYApartmanetA
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\NYApartmentA_Albedo.jpg
+	map_Kd buildings2\NYApartmentA_Albedo.jpg
+
+newmtl parkchair_D1_parkchair__AO_tga
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\parkchair1_D.jpg
+	map_Kd buildings2\parkchair1_D.jpg
+
+newmtl NYBuildingA
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\NYBuildingAt_AlbedoTransparency.jpg
+	map_Kd buildings2\NYBuildingAt_AlbedoTransparency.jpg
+
+newmtl other_001
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\other_001_Albedo.jpg
+	map_Kd buildings2\other_001_Albedo.jpg
+
+newmtl t_002_b003
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t_002_b003_basecolor.jpg
+	map_Kd buildings2\t_002_b003_basecolor.jpg
+
+newmtl other_002
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\other_002_basecolor.jpg
+	map_Kd buildings2\other_002_basecolor.jpg
+
+newmtl t002_door002
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t002_door002_Albedo.jpg
+	map_Kd buildings2\t002_door002_Albedo.jpg
+
+newmtl t_002_b001_2
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t_002_b001-2_basecolor.jpg
+	map_Kd buildings2\t_002_b001-2_basecolor.jpg
+
+newmtl t_002_br001_sf
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\b002_br002_sf_basecolor.jpg
+	map_Kd buildings2\b002_br002_sf_basecolor.jpg
+
+newmtl t_002_b002_2
+	Ns 0.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6000 0.6000 0.6000
+	Kd 0.6000 0.6000 0.6000
+	Ks 0.9000 0.9000 0.9000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka buildings2\t_002_b002-2_style2_basecolor.jpg
+	map_Kd buildings2\t_002_b002-2_style2_basecolor.jpg

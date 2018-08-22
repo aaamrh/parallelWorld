@@ -11,26 +11,7 @@
 .f-pr{position: relative;}
 .f-pa{position: absolute;}
 
-/* .m-contain{
-	background: url('../images/bg.jpg');
-}
-.m-contain .login .logo img{
-	height: 80px;
-	width: 80px;
-}
-.login .logo{
-	color: #fff;
-}
-.login .logo span{
-	display: block;
-	width: 210px;
-	margin-top: 15px;
-} */
 
-/* .m-contain .webgl	{
-	margin: 20px auto 0;
-	width: 800px;
-} */
 body{
 	overflow: hidden;
 }
@@ -44,9 +25,6 @@ body{
 	overflow: hidden;
 	height: 190px;
 	width: 280px;
-	/* background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -webkit-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(26, 210, 150, 0.6) 0%, rgba(48, 105, 68, 0.6) 100%, rgba(0, 51, 0, .6) 100%); */
 	background: rgba(0,0,0,.3);
 }
 
@@ -59,9 +37,6 @@ body{
 	border-radius: 10px;
 	margin-top: 20px;
 	overflow: hidden;
-	/* background: linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -webkit-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%);
-	background: -moz-linear-gradient(180deg, rgba(51, 255, 255, .6) 0%, rgba(51, 255, 255, .6) 0%, rgba(0, 51, 0, .6) 100%, rgba(0, 51, 0, .6) 100%); */
 	background: rgba(0,0,0,.3);
 }
 .btm .chart{
@@ -76,7 +51,6 @@ body{
 	left: 0;
 	width: 275px;
 	height: 200px;
-	background: url(../images/三维.jpg) no-repeat center/100% 100%;
 	opacity: .8;
 }
 
@@ -92,18 +66,19 @@ body{
 	-webkit-appearance: none!important;
 }
 .range-slider {
-	 position: absolute;
-	 margin-left: 50%;
-	 transform:translate3d(-400px,0,0);
-   height: 50px;
-   width: 800px;
-   cursor: pointer;
-   bottom: 0;
+	position: absolute;
+	margin-left: 50%;
+	transform:translate3d(-400px,0,0);
+	height: 10px;
+	width: 800px;
+	cursor: pointer;
+	bottom: 15px;
 }
 
 .range-slider .range-slider-tooltip {
-	font-size: 18px;
 	position: absolute;
+	display: none;
+	font-size: 18px;
 	z-index: 1;
 	top: -34px;
 	padding: 5px 10px;
@@ -114,7 +89,6 @@ body{
 	border-radius: 6px;
 	background-color: #fff;
 	text-shadow: 0 1px 0 #f3f3f3;
-	display: none;
 }
 
 .range-slider input[type=range] {
@@ -211,7 +185,7 @@ body{
     position: absolute;
     left: 0;
     width: 100%;
-    height:50px;
+    height:10px;
 	border-radius: 1px;
 	background: #fff;
     background: rgba(255, 255, 255, .4);
@@ -224,12 +198,18 @@ body{
 	background: rgba(255, 255, 255, .8);
 	overflow: hidden;
 }
-.range-slider.error .range-bar-active{
-	background:#f44336;
+
+/* 播放按钮 */
+.play{
+	position: absolute;
+	bottom: 5px;
+	margin-left: 17%;
+	width: 32px;
+	height: 32px;
+	background: url(../images/stop.png) no-repeat center/100%;
+	opacity: .6;
+	cursor: pointer;
 }
-.range-slider.warning .range-bar-active{
-	background:#ffc107;
-}
-.range-slider.success .range-bar-active{
-	background:#4caf50;
+.play:hover{
+	opacity: .8;
 }

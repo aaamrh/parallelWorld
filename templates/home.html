@@ -29,25 +29,15 @@
 
 <body>
 	<div class="m-contain f-pr">
-		<!-- <div class="login f-clear">
-			<div class="logo f-clear f-l">
-				<img class="f-l" src="{{ url_for('static', filename='./images/logo.png') }}" alt="">
-				<span>国家军事</span>
-				<span>National military</span>
-			</div>
-		</div> -->
 		<div class="webgl">
-			<div id="Stats-output">
-			</div>
-			<div id="WebGl-output">
-			</div>
-
+			<div id="Stats-output"></div>
+			<div id="WebGl-output"></div>
+      <div class="play"></div>
 			<div class="range-slider custom-range">
 				<div class="range-bar"></div>
 				<div class="range-bar range-bar-active"></div>
 				<span class="range-slider-tooltip"></span>
 			</div>
-
 		</div>
 
 		<div class="chart-rt f-pa">
@@ -62,11 +52,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="chart-lt">
+		<!-- <div class="chart-lt">
 			<div class="chart">
 				{{ line_chart|safe }}
 			</div>
-		</div>
+		</div> -->
 	</div>
 
 	<!-- <script src='{{ url_for("static", filename="js/home.js" ) }} '></script> -->
@@ -82,7 +72,7 @@
 
   // 控制条
   ;(function(){
-    var
+  var
   rgMax = 0,  // JSON中的最大时间戳
   rgMin = 0,  // JSON中的最小时间戳 
   rgTime = 0, // 从json中获取时间戳，计算时间轴的长度  > 多少秒
@@ -106,7 +96,11 @@
   moveSpeedZ = [],
   ctrlModels = [];  //  可以操作的模型，不包括 地形，等这些模型
 
-  
+  // 3D动画暂停按钮
+  var 
+  play = document.getElementsByClassName('play')[0],
+  ISPLAY = true;
+
   /**
    * [ 从.json文件中获取模型的坐标信息 ]
    * @ Author: 马瑞华 [ time: 2018-08-10 ]
@@ -122,7 +116,6 @@
   //  获取数据，将str转化为 JS对象
   $.get("../static/threelib/models/position.json", function (data, status) {
     jsonData = JSON.parse(data);
-    console.log(jsonData);
     for (var i in jsonData) {
       times.push(i);
     }
@@ -212,7 +205,7 @@
   //新建光源
   function initLight() {
     light = new THREE.PointLight(0xffffff);
-    light.position.set(300, 400, 200);
+    light.position.set(1000, 1000, 1000);
     scene.add(light);
     scene.add(new THREE.AmbientLight(0xffffff));
   }
@@ -220,36 +213,48 @@
   //定义地板
   function initFloor() {
   //添加地板割线
-  var grid = new THREE.GridHelper( 2000, 20, 0xffffff, 0xffffff );
-  grid.material.opacity = 0.2;
+  var grid = new THREE.GridHelper( 40000, 400, 0xffffff, 0xffffff );
+  grid.material.opacity = 0.6;
   grid.material.transparent = true;
-  grid.position.y = 100;
+  // grid.position.y = 0;
   scene.add( grid );
 }
+
   function initTools() {
     //新建坐标系
     var ax = new THREE.AxesHelper(100000);
     scene.add(ax);
   }
 
-
   function setupTween() {
+    tk2 = models_arr['tank2'];
+    tk2.rotation.y = 0.5*Math.PI;
+
+    k41 = models_arr['tank1'];
+    k41.rotation.y = 1*Math.PI;
+
     ground = models_arr['ground'];
 		ground.rotation.x = -0.5*Math.PI;
-		ground.scale.x = 10;
-		ground.scale.y = 10;
-		ground.scale.z = 10;
+
+    // building = models_arr['building1'];
   }
 
   function initCamera() {
-    camera = new THREE.PerspectiveCamera(40, 800 / 600, 1, 6000);
-    camera.position.set(500, 500, 500)
+    camera = new THREE.PerspectiveCamera(80, 800 / 600, 1, 100000);
+    camera.position.set(2000, 2000, 2000)
     camera.lookAt(scene.position)
     //新建渲染器
     renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor(0xcccccc);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     document.getElementById("WebGl-output").appendChild(renderer.domElement);
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function control() {
@@ -308,46 +313,18 @@
         models_arr[i].position.z = move(models_arr[i].position.z, allPosz[i], moveSpeedZ[i]);
         models_arr[i].position.x = move(models_arr[i].position.x, allPosx[i], moveSpeedX[i]);
         models_arr[i].position.y = move(models_arr[i].position.y, allPosy[i], moveSpeedY[i]);
-        console.log(models_arr[i].position.x);
-        console.log(models_arr[i].position.y);
-        console.log(models_arr[i].position.z);
       }
-
     }
 
-
-    /*if (jsonData[sysTime]) { //如果这个时间点有数据，就更新小车位置参数
-      tank_axisx = jsonData[sysTime].x;
-      tank_axisy = jsonData[sysTime].y;
-      tank_axisz = jsonData[sysTime].z;
-    }
-    console.log(sysTime);
-    if (tank1.position.x > tank_axisx) {
-      tank1.position.x -= 10;
-    }
-    if (tank1.position.x < tank_axisx) {
-      tank1.position.x += 10;
-    }
-    if (tank1.position.y > tank_axisy) {
-      tank1.position.y -= 10;
-    }
-    if (tank1.position.y < tank_axisy) {
-      tank1.position.y += 10;
-    }
-    if (tank1.position.z > tank_axisz) {
-      tank1.position.z -= 10;
-    }
-    if (tank1.position.z < tank_axisz) {
-      tank1.position.z += 10;
-    }*/
     renderer.render(scene, camera);
   }
   //定义json数据
   var models_json_test = '{"models" : [' +
-    '{"model_file" : "k4" , "model_obj" : "k41" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-    '{"model_file" : "terrain" , "model_obj" : "ground" , "posx" : "0" , "posy" : "0" , "posz" : "-100" , "scalea" : "1" , "scaleb" : "1" , "scalec" : "1"},' +
-    '{"model_file" : "k4" , "model_obj" : "k42" , "posx" : "100" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},' +
-    '{"model_file" : "tk2" , "model_obj" : "tk2" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"}]}'
+    '{"model_file" : "tank1" , "model_obj" : "tank1" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "30" , "scaleb" : "30" , "scalec" : "30"},' +
+    '{"model_file" : "tarrain" , "model_obj" : "ground" , "posx" : "0" , "posy" : "-300" , "posz" : "0" , "scalea" : "30" , "scaleb" : "30" , "scalec" : "30"},' +
+    '{"model_file" : "buildings1" , "model_obj" : "building1" , "posx" : "0" , "posy" : "0" , "posz" : "2000" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},'+
+    '{"model_file" : "buildings2" , "model_obj" : "building2" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "20" , "scaleb" : "20" , "scalec" : "20"},'+
+    '{"model_file" : "tank2" , "model_obj" : "tank2" , "posx" : "0" , "posy" : "0" , "posz" : "0" , "scalea" : "30" , "scaleb" : "30" , "scalec" : "30"}]}'
   var models_json = JSON.parse(models_json_test);
 
   /**
@@ -373,14 +350,14 @@
    * @ return:   { type }  { desc }
    */
 
-  // TODO: 
   var model_move_arr = [];
   function ctrlTrack() {
     // DONE: 实时刷新鼠标点击事件后的模型坐标
     pastTime = Math.floor((sysTime - rgMin) / 1000);
     currentWidth = pastTime / rgTime * 100;
     sysTime += 1000;
-
+    
+    // 1秒内只计算一次模型的运动速度
     if(jsonData[sysTime]){
       CALC_SPEED = true;
     }
@@ -389,7 +366,8 @@
       rgTrack.style.right = 0 + '%';
       sysTime = parseInt(rgMax);
     }
-
+    
+    // 点击后，根据化冻后的距离来校正系统时间
     if (signal) {
       currentWidth = trackWidth / range.offsetWidth * 100;
       if (currentWidth >= 100) {
@@ -404,7 +382,6 @@
     rgTrack.style.right = 100 - currentWidth + '%';
     
     var model_move_arr = [];
-   
   }
 
   range.addEventListener('mousedown', mosDown);
@@ -422,6 +399,7 @@
     //var ev = ev || window.event;
     trackWidth = ev.clientX - range.offsetLeft + 400;
     currentWidth = trackWidth / range.offsetWidth * 100;
+    // 判断是否滑出进度条
     if (currentWidth <= 0) {
       currentWidth = 0;
     } else if (currentWidth >= 100) {
@@ -464,8 +442,33 @@
   function init() {
     initScene();
     initCamera();
+
+    var material = new THREE.MeshStandardMaterial( { color : 0x000000 } );
+
+    //create a triangular geometry
+    var geometry = new THREE.Geometry();
+    geometry.vertices.push( new THREE.Vector3( -50,-50, 200 ) );
+    geometry.vertices.push( new THREE.Vector3(  50,-50, 200 ) );
+    geometry.vertices.push( new THREE.Vector3(  50, 50, 200 ) );
+
+    //create a new face using vertices 0, 1, 2
+    var normal = new THREE.Vector3( 0, 1, 0 ); //optional
+    var color = new THREE.Color( 0xffffff); //optional
+    var materialIndex = 0; //optional
+    var face = new THREE.Face3( 0, 1, 2, normal, color, materialIndex );
+
+    //add the face to the geometry's faces array
+    geometry.faces.push( face );
+
+    //the face normals and vertex normals can be calculated automatically if not supplied above
+    geometry.computeFaceNormals();
+    geometry.computeVertexNormals();
+
+    scene.add( new THREE.Mesh( geometry, material ) );
+
     initLight();
     initFloor();
+    onWindowResize();
     // initSkybox();
     initstats();
     initTools();
@@ -488,10 +491,21 @@
     control();
     // render();
   }
-
   init();
-  })();
   
+  play.onclick = function(){
+    ISPLAY = !ISPLAY;
+    if(ISPLAY){
+      timer = setInterval(ctrlTrack, 1000);
+      this.style.background = "url({{ url_for('static', filename='images/stop.png') }}) no-repeat center/100%";
+    }
+    else{
+      this.style.background = "url({{ url_for('static', filename='images/play.png') }}) no-repeat center/100%";
+      clearInterval(timer);
+    }
+  }
+  })();
+
 	</script>
 </body>
 
